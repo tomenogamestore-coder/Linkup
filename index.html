@@ -1,231 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Link-Up 1.0</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Firebase Legacy Scripts (Fixes White Screen) -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-    <style>
-        * { box-sizing: border-box; font-family: Arial; }
-        body { margin: 0; background: #f5f7fb; height: 100vh; }
-
-        /* AUTH PAGE */
-        #authPage { height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .box { width: 320px; padding: 30px; border-radius: 25px; box-shadow: 0 5px 20px #ccc; text-align: center; background: white; }
-        h1 { color: #20a84a; margin: 0; }
-        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #ddd; outline: none; }
-        button { width: 100%; padding: 12px; margin: 8px 0; border: 0; border-radius: 15px; background: #20a84a; color: white; cursor: pointer; font-weight: bold; }
-
-        /* CHAT PAGE */
-        #chatPage { display: none; height: 100vh; flex-direction: column; background: white; }
-        .header { padding: 20px; text-align: center; border-bottom: 1px solid #eee; }
-        #searchUser { width: 80%; text-align: center; }
-        
-        /* USER LIST */
-        .list { flex: 1; overflow-y: auto; padding: 10px; }
-        .user-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f9f9f9; cursor: pointer; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 15px; background: #bbb; }
-        .online { background: #4CAF50; box-shadow: 0 0 5px #4CAF50; }
-        .offline { background: #F44336; }
-
-        /* FOOTER */
-        .footer { height: 60px; border-top: 1px solid #eee; display: flex; justify-content: space-around; align-items: center; background: white; }
-        .logout { color: #F44336; cursor: pointer; font-weight: bold; }
-
-        /* MSG OVERLAY */
-        #msgPage { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 10; flex-direction: column; }
-        .msg-top { padding: 15px; background: #20a84a; color: white; display: flex; align-items: center; }
-        #msgArea { flex: 1; padding: 15px; overflow-y: auto; background: #f0f2f5; display: flex; flex-direction: column; }
-        .bubble { padding: 10px; border-radius: 10px; margin: 5px 0; max-width: 80%; font-size: 14px; }
-        .m { background: #20a84a; color: white; align-self: flex-end; }
-        .t { background: white; align-self: flex-start; }
-    </style>
+<title>DudeFight 1 Privacy Policy</title>
 </head>
+
 <body>
 
-    <!-- Login/Signup Screen -->
-    <div id="authPage">
-        <div class="box">
-            <h1>Link-Up</h1>
-            <p>Connect with friends</p>
-            <input id="uName" placeholder="Your Name">
-            <input id="uEmail" placeholder="Email">
-            <input id="uPass" type="password" placeholder="Password">
-            <button id="doSignup">Sign Up</button>
-            <button id="doSignin" style="background:#444">Sign In</button>
-        </div>
-    </div>
+<h1>DudeFight 1 Privacy Policy</h1>
 
-    <!-- Main App Screen -->
-    <div id="chatPage">
-        <div class="header">
-            <h2 id="welcome">Hi 👋</h2>
-            <input id="searchInp" placeholder="(search box)">
-            <button id="doSearch" style="background:none; color:blue; text-decoration:underline; width:auto; padding:0;">search</button>
-        </div>
-        <div class="list" id="userList">
-            <div id="searchResults"></div>
-            <hr>
-            <div id="recentChats"></div>
-        </div>
-        <div class="footer">
-            <b>Chats</b>
-            <div class="logout" id="doLogout">Log out 🚪</div>
-        </div>
-    </div>
+<p>
+Privacy Policy for Andar
 
-    <!-- Chatting Screen -->
-    <div id="msgPage">
-        <div class="msg-top">
-            <button id="backBtn" style="background:none; color:white; border:none; font-size:20px; cursor:pointer;">⬅</button>
-            <span id="targetName" style="margin-left:15px;">Name</span>
-        </div>
-        <div id="msgArea"></div>
-        <div style="display:flex; padding:10px; border-top:1px solid #ddd;">
-            <input id="msgInp" placeholder="Type here..." style="margin:0;">
-            <button id="doSend" style="width:70px; margin-left:10px;">Send</button>
-        </div>
-    </div>
+Last updated: August 17, 2026
 
-<script>
-    // --- CONFIG ---
-    const firebaseConfig = {
-        apiKey: "AIzaSyASngTibn8_qQYMxKE5WwBfxJaZZlHYQdA",
-        authDomain: "contactchat67.firebaseapp.com",
-        databaseURL: "https://contactchat67-default-rtdb.firebaseio.com",
-        projectId: "contactchat67",
-        storageBucket: "contactchat67.appspot.com",
-        messagingSenderId: "986424533908",
-        appId: "1:986424533908:web:54e616c9424a014959e581"
-    };
+Welcome to Andar. Your privacy is important to us. This Privacy Policy explains how we handle information when you use our applications and services.
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.database();
-    const $ = id => document.getElementById(id);
+1. Information We Collect
 
-    let currentChatId = null;
+Andar may collect limited information needed to provide our services, such as:
 
-    // --- AUTH LOGIC ---
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            db.ref("users/" + user.uid).once("value", snap => {
-                if(snap.exists()){
-                    $("welcome").innerText = "hi " + snap.val().name + " 👋";
-                    $("authPage").style.display = "none";
-                    $("chatPage").style.display = "flex";
-                    
-                    // Set Online
-                    db.ref("users/" + user.uid + "/online").set(true);
-                    db.ref("users/" + user.uid + "/online").onDisconnect().set(false);
-                    
-                    loadRecentChats();
-                }
-            });
-        } else {
-            $("authPage").style.display = "flex";
-            $("chatPage").style.display = "none";
-        }
-    });
+- Device information (device model, operating system version)
+- App usage information (such as crashes and performance data)
+- Information you provide voluntarily (such as account information, if available)
 
-    $("doSignup").onclick = () => {
-        const name = $("uName").value, email = $("uEmail").value, pass = $("uPass").value;
-        auth.createUserWithEmailAndPassword(email, pass)
-            .then(res => {
-                db.ref("users/" + res.user.uid).set({ name, email: email.toLowerCase(), online: true });
-            })
-            .catch(e => alert(e.message));
-    };
+We do not collect personal information unless it is needed for a specific feature.
 
-    $("doSignin").onclick = () => {
-        auth.signInWithEmailAndPassword($("uEmail").value, $("uPass").value)
-            .catch(e => alert(e.message));
-    };
+2. How We Use Information
 
-    $("doLogout").onclick = () => {
-        db.ref("users/" + auth.currentUser.uid + "/online").set(false);
-        auth.signOut();
-    };
+We use collected information to:
 
-    // --- SEARCH & RECENT ---
-    $("doSearch").onclick = () => {
-        const mail = $("searchInp").value.toLowerCase().trim();
-        db.ref("users").once("value", snap => {
-            $("searchResults").innerHTML = "<b>Search Result:</b>";
-            snap.forEach(child => {
-                if(child.val().email === mail && child.key !== auth.currentUser.uid){
-                    renderUserRow(child.key, child.val().name, $("searchResults"));
-                }
-            });
-        });
-    };
+- Provide and improve our applications
+- Fix bugs and improve performance
+- Maintain security and reliability
+- Develop new features
 
-    function loadRecentChats() {
-        db.ref("users/" + auth.currentUser.uid + "/conversations").on("value", snap => {
-            $("recentChats").innerHTML = "<b>Recent Chats:</b>";
-            snap.forEach(convo => {
-                db.ref("users/" + convo.key).once("value", u => {
-                    renderUserRow(u.key, u.val().name, $("recentChats"));
-                });
-            });
-        });
-    }
+3. Data Sharing
 
-    function renderUserRow(uid, name, container) {
-        const div = document.createElement("div");
-        div.className = "user-item";
-        div.innerHTML = `<div class="dot" id="dot-${uid}"></div> <span>${name}</span>`;
-        div.onclick = () => openChat(uid, name);
-        container.appendChild(div);
+Andar does not sell your personal information.
 
-        db.ref("users/" + uid + "/online").on("value", s => {
-            const d = $("dot-" + uid);
-            if(d) d.className = "dot " + (s.val() ? "online" : "offline");
-        });
-    }
+We may share limited information only when:
+- Required by law
+- Needed to protect our services and users
 
-    // --- CHATTING ---
-    function openChat(uid, name) {
-        currentChatId = [auth.currentUser.uid, uid].sort().join("_");
-        $("targetName").innerText = name;
-        $("msgPage").style.display = "flex";
-        
-        db.ref("chats/" + currentChatId).on("value", snap => {
-            $("msgArea").innerHTML = "";
-            snap.forEach(m => {
-                const data = m.val();
-                const div = document.createElement("div");
-                div.className = "bubble " + (data.uid === auth.currentUser.uid ? "m" : "t");
-                div.innerText = data.text;
-                $("msgArea").appendChild(div);
-            });
-            $("msgArea").scrollTop = $("msgArea").scrollHeight;
-        });
-    }
+4. User Data
 
-    $("backBtn").onclick = () => {
-        $("msgPage").style.display = "none";
-        db.ref("chats/" + currentChatId).off(); // Stop listening when closed
-    };
+Your personal files, documents, and private content are not accessed or collected unless you clearly enable a feature that requires it.
 
-    $("doSend").onclick = () => {
-        const text = $("msgInp").value;
-        if(!text) return;
-        const otherUid = currentChatId.split("_").find(id => id !== auth.currentUser.uid);
-        
-        db.ref("users/" + auth.currentUser.uid + "/conversations/" + otherUid).set(true);
-        db.ref("users/" + otherUid + "/conversations/" + auth.currentUser.uid).set(true);
-        
-        db.ref("chats/" + currentChatId).push({
-            uid: auth.currentUser.uid,
-            text: text
-        });
-        $("msgInp").value = "";
-    };
-</script>
+5. Children's Privacy
+
+Our applications are designed to respect user privacy. We do not knowingly collect personal information from children without appropriate permission.
+
+6. Security
+
+We take reasonable steps to protect information and prevent unauthorized access.
+
+However, no digital service can guarantee complete security.
+
+7. Changes to This Privacy Policy
+
+We may update this Privacy Policy when our services change. Updated versions will be posted with a new date.
+
+8. Contact
+
+If you have questions about this Privacy Policy, contact:
+
+Andar Developer team
+Email: erdenemandakhamartuvshin@outlook.com
+</p>
+
 </body>
 </html>
